@@ -1,0 +1,31 @@
+# decision trees
+import pandas as pd
+import numpy as np
+df=pd.read_csv("/storage/emulated/0/anvitha/admission1.csv")
+print(df.head())
+print(df.tail())
+print(df.describe())
+print(df.shape)
+print(df.info)
+df=df.drop("Research",axis=1)
+print(df.shape)
+print(df.describe())
+X=df.drop('Chance_of_Admit',axis=1)
+y=df[['Chance_of_Admit']]
+from sklearn.model_selection import train_test_split
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.25)
+from sklearn.tree import DecisionTreeClassifier
+model = DecisionTreeClassifier()
+model.fit(X_train,y_train)
+y_pred = model.predict(X_test)
+print(y_pred)
+print(y_test)
+# evaluation metrics
+from sklearn.metrics import accuracy_score,confusion_matrix
+conf_mat = confusion_matrix(y_pred,y_test)
+acc_score = accuracy_score(y_pred,y_test)
+print(conf_mat)
+print(acc_score)
+new_parameters=[[340,120,4.5,5,5,9.8,1]]
+Chance_of_Admit_predicted=model.predict(new_parameters)
+print(Chance_of_Admit_predicted)
